@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generated Marketing Image</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .gradient-custom {
+            background: linear-gradient(135deg, #a0a1eb 0%, #c096eb 100%);
+        }
+        .glass-morphism {
+            background: rgba(255, 255, 255, 0.95);
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .image-container {
+            transition: max-height 0.3s ease;
+            max-height: 70vh;
+            overflow: hidden;
+            position: relative;
+        }
+        .image-container img {
+            width: 100%;
+            height: auto;
+        }
+        .image-container.expanded {
+            max-height: none;
+        }
+        .share-button {
+            transition: all 0.3s ease;
+        }
+        .share-button:hover {
+            transform: translateY(-2px);
+        }
+        .expand-button {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body class="gradient-custom min-h-screen py-8 px-4">
+    <div class="max-w-5xl mx-auto">
+        <div class="glass-morphism rounded-2xl p-8 shadow-2xl">
+            <div class="text-center mb-8">
+                <h1 class="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 to-purple-600 mb-4">
+                   BrandCanvas
+                </h1>
+                <div class="bg-gray-50 rounded-xl p-4 inline-block">
+                    <p class="text-gray-700 italic">"{{ prompt }}"</p>
+                    <p class="text-sm text-gray-500 mt-2">Style: {{ style }}</p>
+                </div>
+            </div>
+
+            <div id="imageContainer" class="image-container rounded-xl overflow-hidden shadow-2xl mb-8">
+                <img src="{{ url_for('static', filename=image_path) }}" 
+                     alt="Generated Marketing Image"
+                     class="w-full object-cover"
+                     loading="lazy">
+                <div class="expand-button" onclick="toggleImageSize()">Expand</div>
+            </div>
+
+            <div class="flex flex-wrap justify-center gap-4 mb-4">
+                <a href="{{ url_for('static', filename=image_path) }}" 
+                   download
+                   class="share-button flex items-center space-x-2 bg-gradient-to-r from-indigo-500 to-purple-600 text-white px-6 py-3 rounded-xl hover:shadow-lg">
+                    <i class="fas fa-download"></i>
+                    <span>Download Image</span>
+                </a>
+
+                <a href="{{ url_for('index') }}" 
+                   class="share-button flex items-center space-x-2 bg-white text-gray-700 px-6 py-3 rounded-xl hover:shadow-lg border-2 border-gray-200">
+                    <i class="fas fa-plus"></i>
+                    <span>Create Another</span>
+                </a>
+            </div>
+
+            <div class="mt-8 text-center">
+                <p class="text-sm text-gray-500">Generated on {{ timestamp }}</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleImageSize() {
+            const imageContainer = document.getElementById('imageContainer');
+            imageContainer.classList.toggle('expanded');
+            const expandButton = imageContainer.querySelector('.expand-button');
+            if (imageContainer.classList.contains('expanded')) {
+                expandButton.textContent = 'Collapse';
+            } else {
+                expandButton.textContent = 'Expand';
+            }
+        }
+    </script>
+</body>
+</html>
